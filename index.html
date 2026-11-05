@@ -112,7 +112,7 @@ textarea{font-size:13px;resize:vertical;word-break:break-all}
 .next{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:2px}
 .note{margin:0;font-size:13px;background:#FFF4EA;border-radius:10px;padding:8px 12px}
 .prev{display:flex;flex-direction:column;gap:8px}
-.co.col{flex-direction:column;align-items:stretch}.rowh{display:flex;gap:10px;align-items:center}.roles{color:var(--muted);font-size:12px}
+.co.col{flex-direction:column;align-items:stretch;gap:4px}.co.col>.rowh{flex:none}.rowh{display:flex;gap:10px;align-items:center}.roles{color:var(--muted);font-size:12px}
 .fails{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--warn)}
 .sub{margin-top:6px}
 @media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}.stage{position:static}}
@@ -394,6 +394,7 @@ let CL=(()=>{const c=store.get("c2040-class");return CLASSES[c]?c:null})();
 let D=(()=>{const g=store.get("c2040-cur");return CL&&g&&g<=CLASSES[CL]?loadDraft(CL,g):null})();
 const save=()=>{if(D){store.set(dkey(D.cl,D.g),D);store.set("c2040-cur",D.g)}};
 const city=()=>CL?STATE.cities[CL].districts:{};
+let PREV={},TPASTE="";const prev=()=>CL&&PREV[CL]?PREV[CL]:{};
 function setClass(c){if(c===CL)return;save();CL=c;store.set("c2040-class",c);D=null;store.set("c2040-cur",null);note="";applyWorld(view);dirty=true;if(view==="city")renderCity();if(view==="mine")renderMine();if(view==="teacher")renderTeacher();renderHUD()}
 const classPick=()=>el("div",{class:"cpick",role:"group","aria-label":"Your class"},el("span",{class:"cpl"},"Class"),...Object.keys(CLASSES).map(c=>el("button",{class:"cb","aria-pressed":CL===c,onclick:()=>setClass(c)},c)));
 const num=v=>{if(v===""||v==null)return null;const n=Number(String(v).replace(/−/g,"-").trim());return Number.isFinite(n)?n:null};
@@ -447,7 +448,8 @@ const passCount=c=>{const all=[...c[1],...c[2],...c[3]];return[all.filter(x=>x[0
 function applyWorld(mode){for(let j=0;j<GD;j++){ELEV[j]=Array(GW).fill(0);ZONE[j]="EEEEEEEEEE"}for(const k in floors)delete floors[k];for(const k in paint)delete paint[k];
  const put=(g,dd)=>{for(let k=0;k<10;k++){const[i,j]=tileIJ(g,k);const h=num(dd.h[k]);ELEV[j][i]=h==null?0:Math.max(-30,Math.min(50,h))/10;
    const z="HPSUW".includes(dd.z[k])&&dd.z[k]?dd.z[k]:"E";ZONE[j]=ZONE[j].slice(0,i)+z+ZONE[j].slice(i+1);const f=num(dd.f[k]);if((z==="H"||z==="S")&&f!=null&&f>0&&f<=20)floors[i+","+j]=Math.round(f);const pc=(dd.col||[])[k];if(PAL.includes(pc))paint[i+","+j]=pc}};
- const cd=city();for(const g in cd)if(!(mode==="mine"&&D&&D.g===+g))put(+g,cd[g]);
+ const cd=city();for(const g in cd)if(!(mode==="mine"&&D&&D.g===+g)&&!(mode==="teacher"&&prev()[g]))put(+g,cd[g]);
+ if(mode==="teacher"){const pv=prev();for(const g in pv)put(+g,pv[g])}
  if(mode==="mine"&&D)put(D.g,D)}
 /* ---------- camera + render ---------- */
 let view="city",yaw=.62,auto=!matchMedia("(prefers-reduced-motion: reduce)").matches,dirty=true,focusK=0;
@@ -457,12 +459,12 @@ function draw(t){TNOW=t;CAM=camFor();NIGHT=0;
  const sk=g.createLinearGradient(0,0,0,H);sk.addColorStop(0,"#CFE3F8");sk.addColorStop(1,"#F3F7FC");g.fillStyle=sk;g.fillRect(0,0,W,H);const gr=g.createRadialGradient(960,560,60,960,560,900);gr.addColorStop(0,"rgba(255,255,255,.85)");gr.addColorStop(1,"rgba(255,255,255,0)");g.fillStyle=gr;g.fillRect(0,0,W,H);
  const S={p1:1,p2:1,p3:1,p4:0,p5:0,p6:0,p7:0,p8:0,p9:0,hl:{},focus:null,water:0,wall:0,t4f:14,t4hot:0};
  buildCity(t,S);drawCity(1);
- const NT=CL?CLASSES[CL]:6;for(let gN=1;gN<=NT;gN++){const has=city()[gN];const mine=view==="mine"&&D&&D.g===gN;if(!has&&!mine&&view==="mine")continue;
+ const NT=CL?CLASSES[CL]:6;for(let gN=1;gN<=NT;gN++){const pv=view==="teacher"?prev()[gN]:null;const has=pv||city()[gN];const mine=(view==="mine"&&D&&D.g===gN)||!!pv;if(!has&&!mine&&view==="mine")continue;
   const[i0,j0]=tileIJ(gN,0);const y=.02;const pts=[[i0,y,j0],[i0+5,y,j0],[i0+5,y,j0+2],[i0,y,j0+2]].map(p=>P(...p));
   g.save();g.globalAlpha=mine?1:.55;g.setLineDash(mine?[]:[10,8]);poly(pts,null,GCOL[gN-1],mine?5:2.5);g.restore();
-  if(view==="city"){const c=P(i0+2.5,.6,j0+1);const nm=has?dname(has):tname(gN);font(F.body,22,600);const w=g.measureText(nm).width+28;g.save();g.globalAlpha=has?1:.45;rrect(c[0]-w/2,c[1]-20,w,38,19);g.fillStyle="rgba(255,255,255,.95)";g.fill();g.strokeStyle=GCOL[gN-1];g.lineWidth=3;g.stroke();txt(nm,c[0],c[1]+7,"#1B2140","center");g.restore()}}
+  if(view==="city"||view==="teacher"){const c=P(i0+2.5,.6,j0+1);const nm=(pv?"NEW · ":"")+(has?dname(has):tname(gN));font(F.body,22,600);const w=g.measureText(nm).width+28;g.save();g.globalAlpha=has?1:.45;rrect(c[0]-w/2,c[1]-20,w,38,19);g.fillStyle="rgba(255,255,255,.95)";g.fill();g.strokeStyle=GCOL[gN-1];g.lineWidth=3;g.stroke();txt(nm,c[0],c[1]+7,"#1B2140","center");g.restore()}}
  if(view==="mine"&&D&&focusK>.6){for(let k=0;k<10;k++){const[i,j]=tileIJ(D.g,k);const h=num(D.h[k]);const p=P(i+.5,topY(h==null?0:Math.max(-30,Math.min(50,h))/10)+.02,j+.5);font(F.mono,20,600);g.save();g.globalAlpha=(focusK-.6)/.4;txt(tileName(D.g,k),p[0],p[1]+7,"#111","center");g.restore()}}}
-let last=0;function loop(ts){const t=ts/1000;if(auto&&view==="city"){yaw+=(t-last)*0.05;dirty=true}
+let last=0;function loop(ts){const t=ts/1000;if(auto&&(view==="city"||view==="teacher")){yaw+=(t-last)*0.05;dirty=true}
  const tgt=view==="mine"&&D?1:0;if(Math.abs(focusK-tgt)>.001){focusK+=(tgt-focusK)*.12;dirty=true}else focusK=tgt;
  last=t;if(dirty){draw(t);dirty=false}requestAnimationFrame(loop)}
 let drag=null;cv.addEventListener("pointerdown",e=>{drag=e.clientX;cv.setPointerCapture(e.pointerId);auto=false});cv.addEventListener("pointermove",e=>{if(drag==null)return;yaw+=(e.clientX-drag)*0.006;drag=e.clientX;dirty=true});cv.addEventListener("pointerup",()=>drag=null);
@@ -600,14 +602,18 @@ function showCode(fin){const c=checks(D);const[ok,tot]=passCount(c);if(fin&&ok<t
 function renderTeacher(){const p=$("#pane-teacher");p.innerHTML="";
  p.append(el("div",{class:"sec"},el("h2",{},"Teacher: add districts to the class city"),el("p",{class:"lede"},"Paste the codes from Teams, one per line. Codes from different classes can go in together: each code carries its class and goes to that class's city. Every check is recalculated here from the students' numbers and working."),classPick()));
  const ta=el("textarea",{id:"paste",rows:"5",placeholder:"C2040-7A-G4-F-…"});const out=el("div",{class:"prev"});const msg=el("p",{class:"hint"});let found=[];
- const doCheck=()=>{const tok=ta.value.split(/\s+/).filter(Boolean);const lines=[];found=[];for(let i=0;i<tok.length;i++){let t=tok[i].replace(/^[^C]*(?=C2040-)/,"");if(!t.startsWith("C2040-"))continue;let r=dec(t),j=i;while(!r&&j+1<tok.length&&!tok[j+1].includes("C2040-")&&j-i<12){j++;t+=tok[j];r=dec(t)}lines.push(t);if(r){found.push(r);i=j}}const bad=lines.length-found.length;out.innerHTML="";
-  if(!found.length){msg.textContent="No valid codes found. Each code starts with C2040- and the class, e.g. C2040-7A-G4.";return}msg.textContent=`${found.length} code${found.length>1?"s":""} found.`+(bad?` ${bad} line${bad>1?"s":""} could not be read: ask that team to copy its code again.`:"");
+ const doCheck=(auto)=>{TPASTE=ta.value;const tok=ta.value.split(/\s+/).filter(Boolean);const lines=[];found=[];for(let i=0;i<tok.length;i++){let t=tok[i].replace(/^[^C]*(?=C2040-)/,"");if(!t.startsWith("C2040-"))continue;let r=dec(t),j=i;while(!r&&j+1<tok.length&&!tok[j+1].includes("C2040-")&&j-i<12){j++;t+=tok[j];r=dec(t)}lines.push(t);if(r){found.push(r);i=j}}const bad=lines.length-found.length;out.innerHTML="";
+  PREV={};found.forEach(f=>{(PREV[f.d.cl]=PREV[f.d.cl]||{})[f.d.g]=Object.assign({},f.d)});
+  if(found.length&&!PREV[CL]&&auto!==true){setClass(found[0].d.cl);return}
+  applyWorld("teacher");dirty=true;
+  if(!found.length){msg.textContent="No valid codes found. Each code starts with C2040- and the class, e.g. C2040-7A-G4.";return}msg.textContent=`${found.length} code${found.length>1?"s":""} found. ${CL} city: the new district${Object.keys(prev()).length>1?"s are":" is"} shown on the city (marked NEW), not saved yet.`+(Object.keys(PREV).length>1?` Choose another class above to preview its codes.`:"")+(bad?` ${bad} line${bad>1?"s":""} could not be read: ask that team to copy its code again.`:"");
   found.forEach(f=>{const c=checks(f.d);const[ok,tot]=passCount(c);f.ok=ok;f.tot=tot;const fails=[...c[1],...c[2],...c[3]].filter(x=>!x[0]).map(x=>x[1]);
-   out.append(el("div",{class:"co on col",style:`--g:${GCOL[f.d.g-1]}`},el("div",{class:"rowh"},emb(f.d.g),el("div",{},el("b",{},`${f.d.cl} · Team ${f.d.g} · ${dname(f.d)}`),el("small",{},`${ok===tot?"Final":"Draft"} · ${ok}/${tot} checks pass (recalculated)`+(f.claimed&&ok<tot?" · labelled final but checks fail":""))),
-    el("small",{class:"roles"},ROLES.map(([k,l])=>f.d.r&&f.d.r[k]?`${l}: ${f.d.r[k]}`:"").filter(Boolean).join(" · "))),
+   out.append(el("div",{class:"co on col",style:`--g:${GCOL[f.d.g-1]}`},el("div",{class:"rowh"},emb(f.d.g),el("div",{},el("b",{},`${f.d.cl} · Team ${f.d.g} · ${dname(f.d)}`),el("small",{},`${ok===tot?"Final":"Draft"} · ${ok}/${tot} checks pass (recalculated)`+(f.claimed&&ok<tot?" · labelled final but checks fail":"")))),
+    el("small",{class:"roles"},ROLES.map(([k,l])=>f.d.r&&f.d.r[k]?`${l}: ${f.d.r[k]}`:"").filter(Boolean).join(" · ")),
     fails.length?el("ul",{class:"fails"},...fails.map(t=>el("li",{},t))):null))})};
- p.append(ta,el("div",{class:"ctl"},el("button",{class:"btn ghost",onclick:doCheck},"Check codes"),
-  el("button",{class:"btn",onclick:async()=>{if(!found.length){msg.textContent="Check the codes first.";return}found.forEach(f=>{{const dd=Object.assign({},f.d,{p:`${f.ok}/${f.tot}`,fin:f.ok===f.tot,at:Date.now()});delete dd.r;STATE.cities[f.d.cl].districts[f.d.g]=dd}});await publish(msg)}},"Save to the class city"),msg),out);
+ if(TPASTE){ta.value=TPASTE;setTimeout(()=>doCheck(true),0)}
+ p.append(ta,el("div",{class:"ctl"},el("button",{class:"btn ghost",onclick:()=>doCheck()},"Check codes"),
+  el("button",{class:"btn",onclick:async()=>{if(!found.length){msg.textContent="Check the codes first.";return}found.forEach(f=>{{const dd=Object.assign({},f.d,{p:`${f.ok}/${f.tot}`,fin:f.ok===f.tot,at:Date.now()});delete dd.r;STATE.cities[f.d.cl].districts[f.d.g]=dd}});await publish(msg);PREV={};TPASTE="";applyWorld("teacher");dirty=true}},"Save to the class city"),msg),out);
  const saved=Object.keys(city());if(CL&&saved.length){p.append(el("h3",{class:"sub"},`Saved districts · ${CL}`),el("div",{class:"roster"},...saved.map(g=>{const d=city()[g];const rm=el("button",{class:"btn ghost sm",onclick:async e=>{if(e.target.dataset.sure!=="1"){e.target.dataset.sure="1";e.target.textContent="Tap again to remove";return}delete STATE.cities[CL].districts[g];await publish(msg)}},"Remove");return el("div",{class:"co on",style:`--g:${GCOL[g-1]}`},emb(+g),el("div",{},el("b",{},`Team ${g} · ${dname(d)}`),el("small",{},`${status(d)} · ${d.p} checks`)),rm)})))}}
 async function publish(msg){STATE.updated=Date.now();
  const st=JSON.stringify(STATE).replace(/</g,"\\u003c");
