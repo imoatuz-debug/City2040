@@ -425,6 +425,15 @@ function calc(s){const t=String(s||"").replace(/[−–]/g,"-").replace(/[×x*]/
  const v=expr();return i===t.length?v:null}
 const isNb=(g,a,b)=>{const ka=[...Array(10)].findIndex((_,k)=>tileName(g,k)===a),kb=[...Array(10)].findIndex((_,k)=>tileName(g,k)===b);if(ka<0||kb<0||ka===kb)return null;const[i1,j1]=tileIJ(g,ka),[i2,j2]=tileIJ(g,kb);return Math.abs(i1-i2)+Math.abs(j1-j2)===1?[ka,kb]:null};
 const normExp=s=>String(s||"").toLowerCase().replace(/₁/g,"1").replace(/₂/g,"2").replace(/[\s×*]/g,"").replace(/[−–]/g,"-");
+/* specific help for the Station 3 simplify box */
+function expHint(raw){const e=normExp(raw);
+ if(/^\d+$/.test(e))return e==="8"?"Good: 4 + 4 = 8 for the numbers. But the f terms are missing. 3f₁ and 3f₂ are floors of two different buildings, so they are unlike terms: keep both. Write all 3 parts: f₁ term + f₂ term + number. (Type f₁ as f1.)":"The f terms are missing. Keep 3f₁ and 3f₂, then add the numbers 4 + 4. (Type f₁ as f1.)";
+ if(/6f/.test(e))return "3f₁ and 3f₂ are different buildings (unlike terms), so they cannot be added into 6f. Keep them separate: 3f₁ + 3f₂ + …";
+ if(/(^|[^0-9])4\+4|\+4$|^4\+/.test(e)&&!/8/.test(e))return "Nearly there: now add the numbers. What is 4 + 4?";
+ if(/f(?![12])/.test(e))return "Write which floors: type f1 for the first building and f2 for the second, like 3f1.";
+ if(!/8/.test(e))return "Check the numbers: the two buildings each add 4, so the number part is 4 + 4.";
+ if(!/3f1|3\(f1/.test(e)||!/3f2|f2\)/.test(e))return "Each building has 3 m per floor, so both f terms need a 3: 3f1 and 3f2.";
+ return "Not fully simplified yet: write it with 3 parts, f₁ term + f₂ term + number, using + between them.";}
 const OKEXP=new Set(["3f1+3f2+8","3f2+3f1+8","8+3f1+3f2","8+3f2+3f1","3(f1+f2)+8","3(f2+f1)+8","8+3(f1+f2)","8+3(f2+f1)"]);
 /* ---------- checks (used by students AND recalculated by the teacher) ---------- */
 function checks(d){const g=d.g;const out={1:[],2:[],3:[]};if(!g)return out;
@@ -594,7 +603,7 @@ function renderMine(){const p=$("#pane-mine");p.innerHTML="";
  if(station===2){const cnt={};D.z.forEach(z=>z&&(cnt[z]=(cnt[z]||0)+1));const rows=[..."HPSUW"].filter(z=>cnt[z]);
   p.append(el("div",{class:"ans"},el("h3",{},"Show your working"),el("table",{class:"ft"},el("thead",{},el("tr",{},el("th",{},"Zone"),el("th",{},"Tiles"),el("th",{},"Simplified fraction"),el("th",{},"Decimal"))),el("tbody",{},...rows.map(z=>{D.fr[z]=D.fr[z]||{fr:"",dec:""};return el("tr",{},el("td",{},el("span",{class:"zd",style:`--z:${ZC[z]}`}),ZN[z]),el("td",{class:"n"},cnt[z]+" / 10"),el("td",{},inp("fr"+z,D.fr[z].fr,v=>D.fr[z].fr=v,{placeholder:"e.g. 2/5"})),el("td",{},inp("de"+z,D.fr[z].dec,v=>D.fr[z].dec=v,{inputmode:"decimal",placeholder:"e.g. 0.4"})))}))),el("p",{class:"hint"},rows.length?"Check in your notebook that the fractions add up to 1.":"Tap a letter on each tile to choose its zone.")))}
  if(station===3)p.append(el("div",{class:"ans"},el("h3",{},"Show your working"),
-  el("label",{class:"fld"},el("span",{},"Simplify (3f₁ + 4) + (3f₂ + 4) ="),inp("exp",D.exp,v=>D.exp=v,{placeholder:"type with f1 and f2, e.g. 3f1 + …"})),
+  el("label",{class:"fld"},el("span",{},"Simplify (3f₁ + 4) + (3f₂ + 4) ="),inp("exp",D.exp,v=>D.exp=v,{placeholder:"type f1 for f₁, f2 for f₂, e.g. 3f1 + …"})),
   el("div",{class:"wrow"},el("span",{class:"wl"},"Substitute"),el("label",{class:"mini grow"},"your working",inp("t2w",D.t2.w,v=>D.t2.w=v,{placeholder:"e.g. 3(13) + 3(8) + 8"})),el("label",{class:"mini"},"total (m)",inp("t2a",D.t2.a,v=>D.t2.a=v,{inputmode:"numeric"}))),
   el("p",{class:"hint"},"f₁ and f₂ are the floors of your two tallest buildings. Designer: tap a colour on each building to paint it.")));
  p.append(el("div",{id:"chk",class:"chk"}));
@@ -660,7 +669,7 @@ function fieldFb(d){if(!d)return;const g=d.g,res=RESV[g]||[];const names=[...Arr
   for(let k=0;k<10;k++){if(!(Z[k]==="H"||Z[k]==="S"))continue;const lo=Z[k]==="H"?2:4,hi=Z[k]==="H"?6:14;
    if(blankv(d.f[k]))mark("f"+k);else mark("f"+k,F[k]!=null&&Number.isInteger(F[k])&&F[k]>=lo&&F[k]<=hi?"ok":"bad",`${Z[k]==="H"?"Housing":"Shops"}: ${lo} to ${hi} floors`);
    if(blankv(d.hh[k])||F[k]==null)mark("hh"+k);else mark("hh"+k,num(d.hh[k])===3*F[k]+4?"ok":"bad","Use h = 3f + 4 with your floors")}
-  if(blankv(d.exp))mark("exp");else mark("exp",OKEXP.has(normExp(d.exp))?"ok":"bad","Not fully simplified yet: collect the f terms and the numbers");
+  if(blankv(d.exp))mark("exp");else mark("exp",OKEXP.has(normExp(d.exp))?"ok":"bad",expHint(d.exp));
   const bl=[];for(let k=0;k<10;k++)if((Z[k]==="H"||Z[k]==="S")&&F[k]!=null)bl.push(F[k]);bl.sort((a,b)=>b-a);const want=bl.length>=2?3*bl[0]+4+3*bl[1]+4:null;const t=d.t2||{};
   if(blankv(t.w))mark("t2w");else{const v=calc(t.w);if(v==null)mark("t2w","bad","Use numbers and brackets, e.g. 3(13) + 3(8) + 8");else if(want==null)mark("t2w");
    else if(!/3\s*[(×x*]/i.test(String(t.w)))mark("t2w","bad","Show the substitution, e.g. 3(13)");else if(v!==want)mark("t2w","bad","Use the floors of your two tallest buildings");else mark("t2w","ok")}
@@ -677,6 +686,7 @@ const dec=s=>{const m0=s.trim().match(/^C2040-(7[A-H])-G([1-6])-(?:A([1-3])-)?([
 /* add a code's layer(s) on top of what is already saved for that team */
 function mergeCode(saved,f){const base=saved?JSON.parse(JSON.stringify(saved)):blank(f.d.g,f.d.cl);delete base.r;base.L=base.L||{};const c=checks(f.d);const now=Date.now();
  for(const L of (f.u?[f.u]:[1,2,3])){LAYF[L].forEach(k=>base[k]=JSON.parse(JSON.stringify(f.d[k])));const ok=c[L].filter(x=>x[0]).length;base.L[L]={p:`${ok}/${c[L].length}`,fin:ok===c[L].length,at:now}}
+ if(f.u===3&&!base.L[2]&&Array.isArray(f.d.z))base.z=JSON.parse(JSON.stringify(f.d.z)); /* A3 before A2: use its zones so the buildings can stand */
  if(f.d.c)base.c=f.d.c;base.cl=f.d.cl;base.g=f.d.g;base.v=3;base.fin=[1,2,3].every(L=>base.L[L]&&base.L[L].fin);let a=0,b=0;for(const L in base.L){const[x,y]=base.L[L].p.split("/").map(Number);a+=x;b+=y}base.p=`${a}/${b}`;base.at=now;return base}
 const layerLine=d=>[1,2,3].map(L=>`${LNAME[L]} ${d.L&&d.L[L]?(d.L[L].fin?"✓":d.L[L].p):"—"}`).join(" · ");
 function showCode(fin){const c=checks(D);const u=station;const ok=c[u].filter(x=>x[0]).length,tot=c[u].length;if(fin&&ok<tot)return;const code=enc(D,fin,u);
