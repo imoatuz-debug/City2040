@@ -8,6 +8,31 @@
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+.goal{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.goal .gh{display:flex;justify-content:space-between;align-items:baseline}.goal .gh b{font:700 16px var(--f-disp);color:var(--navy)}.goal .gh span{font:700 20px var(--f-disp);color:var(--accent)}
+.gbar{direction:ltr;position:relative;height:16px;border-radius:999px;background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);margin:4px 0 6px}.gbar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#26B8C4,#5C93EC,#9D7BEA)}
+.gbar em{position:absolute;top:50%;transform:translate(-50%,-50%);font-style:normal;font-size:18px;background:#fff;border-radius:50%;width:30px;height:30px;display:grid;place-items:center;box-shadow:0 0 0 2px var(--line);filter:grayscale(1);opacity:.7}.gbar em.on{filter:none;opacity:1;box-shadow:0 0 0 3px #F6A623}
+.gbar .m50{left:50%}.gbar .m100{left:calc(100% - 15px)}
+.goal small{color:var(--muted);font-size:12.5px}
+.flood{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px 14px}.flood summary{cursor:pointer;color:var(--navy)}.seal{display:flex;align-items:center;gap:10px;margin-top:6px}.seal input{flex:1;accent-color:#3C8DC4}.seal b{font:700 16px var(--f-mono);color:#1F6FB0;min-width:58px}
+.aws{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}.aw{display:inline-flex;align-items:center;gap:4px;background:#FFF6E0;border:1px solid #F3D59A;border-radius:999px;padding:1px 7px;font-size:12px;line-height:1.5}
+.aws.big .aw{font-size:13px;padding:3px 10px}.aws.big .aw b{font:600 12px var(--f-body);color:#7A4E00}
+.awrow{margin-top:10px;display:flex;flex-direction:column;gap:4px}.awrow small{color:var(--muted);font:600 11px var(--f-mono);text-transform:uppercase;letter-spacing:.05em}
+.top #langb{font-family:"Noto Naskh Arabic","IBM Plex Sans",system-ui,sans-serif}
+[dir=rtl]{font-family:"IBM Plex Sans Arabic","Noto Naskh Arabic",var(--f-body)}
+
+.mw{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:12px 14px}
+.mw summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;list-style:none}.mw summary b{font:700 16px var(--f-disp);color:var(--navy)}.mw summary small{color:var(--muted)}
+.mw>.ctl{margin:10px 0 4px}
+.mwg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+.mwc{background:var(--soft);border-radius:14px;padding:8px}.mwh{display:flex;justify-content:space-between;align-items:baseline;margin:0 4px 6px}.mwh b{font:700 16px var(--f-disp);color:var(--navy)}.mwh small{color:var(--muted);font-size:11.5px}
+.mwt{width:100%;border-collapse:collapse;font-size:12px}.mwt th{font:600 10.5px var(--f-mono);color:var(--muted);text-align:center;padding:2px}.mwt th:first-child{text-align:left}
+.mwt td{padding:3px 2px;border-top:1px solid var(--line)}.mwt td.tn{display:flex;align-items:center;justify-content:flex-start;text-align:left;gap:6px;min-width:0}.mwt td.tn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px;font-family:var(--f-body);font-size:12.5px}
+.mwt td.tn .emb{width:20px;height:22px;font-size:8px}
+.mwt td.c{text-align:center;font-weight:700;border-radius:6px}.mwt td.ok{color:#1E7A3D;background:#E6F5EB}.mwt td.dr{color:#B45309;background:#FFF1E2;font-size:10.5px}.mwt td.no{color:#C0392B;background:#FDECEA}
+.mwt .a4{opacity:.55}
+@media (max-width:700px){.mwg{grid-template-columns:1fr}}
+
 .rgl{display:flex;flex-direction:column;gap:8px}
 .rgc{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:10px 12px;display:flex;flex-direction:column;gap:8px;border-left:6px solid var(--rc)}
 .rgc.on{outline:3px solid var(--rc);outline-offset:1px}
@@ -523,7 +548,7 @@ function draw(t){if(view==="region"){drawRegion(t);return}TNOW=t;CAM=camFor();NI
   g.save();g.globalAlpha=mine?1:.55;g.setLineDash(mine?[]:[10,8]);poly(pts,null,GCOL[gN-1],mine?5:2.5);g.restore();
   if(view==="city"||view==="teacher"){const c=P(i0+2.5,.6,j0+1);const nm=(pv?"NEW · ":"")+(has?dname(has):tname(gN));font(F.body,22,600);const w=g.measureText(nm).width+28;g.save();g.globalAlpha=has?1:.45;rrect(c[0]-w/2,c[1]-20,w,38,19);g.fillStyle="rgba(255,255,255,.95)";g.fill();g.strokeStyle=GCOL[gN-1];g.lineWidth=3;g.stroke();txt(nm,c[0],c[1]+7,"#1B2140","center");g.restore()}}
  if(view==="mine"&&D&&focusK>.6){for(let k=0;k<10;k++){const[i,j]=tileIJ(D.g,k);const h=num(D.h[k]);const p=P(i+.5,topY(h==null?0:Math.max(-30,Math.min(50,h))/10)+.02,j+.5);font(F.mono,20,600);g.save();g.globalAlpha=(focusK-.6)/.4;txt(tileName(D.g,k),p[0],p[1]+7,"#111","center");g.restore()}}}
-let last=0;function loop(ts){const t=ts/1000;if(auto&&(view==="city"||view==="teacher"||view==="region")){yaw+=(t-last)*(view==="region"?0.025:0.05);dirty=true}if(view==="region"){regionTick(t);if(t-RLAST<1/30){last=t;requestAnimationFrame(loop);return}RLAST=t;dirty=true}
+let last=0;function loop(ts){const t=ts/1000;if(auto&&(view==="city"||view==="teacher"||view==="region")){yaw+=(t-last)*(view==="region"?0.025:0.05);dirty=true}if(view==="region"){regionTick(t);if(t-RLAST<(RLITE?1/12:1/30)){last=t;requestAnimationFrame(loop);return}RLAST=t;dirty=true}
  const tgt=view==="mine"&&D?1:0;if(Math.abs(focusK-tgt)>.001){focusK+=(tgt-focusK)*.12;dirty=true}else focusK=tgt;
  last=t;if(dirty){draw(t);dirty=false}requestAnimationFrame(loop)}
 /* drag to turn · wheel / pinch / buttons to zoom (toward the pointer) */
@@ -554,7 +579,7 @@ function renderCity(){const p=$("#pane-city");p.innerHTML="";
  if(!CL){p.append(el("div",{class:"sec"},el("h2",{},"The class city"),el("p",{class:"lede"},"Choose your class to see your city. Each Grade 7 class builds its own city."),classPick()));return}
  const NT=CLASSES[CL];const n=Object.keys(city()).length;
  p.append(el("div",{class:"sec"},el("h2",{},`The ${CL} city`),classPick(),el("p",{class:"lede"},n?`${n} of ${NT} teams have built their district. Drag the city to turn it.`:"No districts saved yet. Each team builds its district in “My district”, then sends its code to the teacher.")),
-  el("div",{class:"roster"},...[...Array(NT)].map((_,i)=>{const g=i+1;const d=city()[g];return el(d?"button":"div",{class:"co"+(d?" on pick":"")+(SEL===g?" sel":""),style:`--g:${GCOL[g-1]}`,...(d?{type:"button","aria-pressed":SEL===g,onclick:()=>selectDistrict(SEL===g?null:g)}:{})},emb(g),el("div",{},el("b",{},`Team ${g} · ${d?dname(d):tname(g)}`),el("small",{},d?(d.L?layerLine(d):`${status(d)} · ${d.p} checks passed`):"Waiting for its code")))})),
+  el("div",{class:"roster"},...[...Array(NT)].map((_,i)=>{const g=i+1;const d=city()[g];return el(d?"button":"div",{class:"co"+(d?" on pick":"")+(SEL===g?" sel":""),style:`--g:${GCOL[g-1]}`,...(d?{type:"button","aria-pressed":SEL===g,onclick:()=>selectDistrict(SEL===g?null:g)}:{})},emb(g),el("div",{},el("b",{},`Team ${g} · ${d?dname(d):tname(g)}`),el("small",{},d?(d.L?layerLine(d):`${status(d)} · ${d.p} checks passed`):"Waiting for its code"),d?awChips(CL,String(g)):null))})),
   el("div",{class:"ctl"},el("button",{class:"btn ghost",onclick:e=>{auto=!auto;dirty=true;e.target.textContent=auto?"Pause turning":"Turn the city"}},auto?"Pause turning":"Turn the city"),el("span",{class:"hint"},STATE.updated?"Last saved by the teacher: "+new Date(STATE.updated).toLocaleString():"")));
  if(n){p.append(el("p",{class:"hint"},SEL?"":"Tap a team to see its choices and talk about them."));if(SEL&&city()[SEL])p.append(profile(city()[SEL]));if(n>=2)p.append(compare())}}
 let station=1,note="";
@@ -570,7 +595,7 @@ function selectDistrict(g){SEL=g;if(g){CAM=camFor();ZOOM=1;PANX=PANY=0;CAM=camFo
 const tb=(head,rows,cls)=>el("table",{class:"ft rt"+(cls?" "+cls:"")},el("thead",{},el("tr",{},...head.map(h=>el("th",{},h)))),el("tbody",{},...rows.map(r=>el("tr",{},...r.map(c=>c instanceof Node?el("td",{},c):el("td",{class:/^[−\d.\/ +=()m%-]+$/.test(String(c))?"n":""},String(c)))))));
 function bar(n,col){return el("span",{class:"zbar"},el("i",{style:`width:${n*10}%;background:${col}`}))}
 function profile(d,inTeacher){const nm=dname(d),g=d.g;const box=el("div",{class:"refl",style:`--g:${GCOL[g-1]}`});const talk=[];
- box.append(el("div",{class:"rowh"},emb(g),el("div",{},el("b",{},`${nm} · Team ${g}`),el("small",{},"Their choices, from the numbers they sent")),inTeacher?el("span",{class:"newtag"},"NEW · preview"):el("button",{class:"btn ghost sm",type:"button",onclick:()=>selectDistrict(null)},"Close")));
+ box.append(el("div",{class:"rowh"},emb(g),el("div",{},el("b",{},`${nm} · Team ${g}`),el("small",{},"Their choices, from the numbers they sent"),inTeacher?null:awChips(CL,String(g),true)),inTeacher?el("span",{class:"newtag"},"NEW · preview"):el("button",{class:"btn ghost sm",type:"button",onclick:()=>selectDistrict(null)},"Close")));
  const t=has(d,1)?terr(d):null;
  if(t){box.append(el("h4",{},"1 · Terrain"),tb(["","Tile","Height"],[["Highest",tileName(g,t.kx),sg(t.mx)+" m"],["Lowest",tileName(g,t.kn),sg(t.mn)+" m"],["Difference",d.rng&&d.rng.w?String(d.rng.w).replace(/-/g,"−"):"",(t.mx-t.mn)+" m"]]));
   if(t.mn<0)talk.push(`Their lowest tile is ${sg(t.mn)} m. Why is the difference ${sg(t.mx)} − (${sg(t.mn)}) = ${t.mx-t.mn} m, and not ${sg(t.mx-Math.abs(t.mn))} m?`);
@@ -621,7 +646,7 @@ function renderMine(){const p=$("#pane-mine");p.innerHTML="";
  if(!D){p.append(el("p",{class:"hint pad"},"Choose your team (it is on your team card) to start."));return}
  p.append(el("div",{class:"team"},el("label",{class:"fld wide"},el("span",{},"Company name (optional)"),inp("cname",D.c,v=>D.c=v,{maxlength:"40",placeholder:tname(D.g)+" Builders"})),
   ...ROLES.map(([k,lab])=>el("label",{class:"fld"},el("span",{},k==="rep"?"Reporter (teams of 5)":lab),inp("r-"+k,D.r[k],v=>D.r[k]=v,{maxlength:"24",placeholder:"name"})))));
- p.append(el("div",{class:"card"},el("div",{class:"who"},el("span",{id:"bigemb"}),el("div",{},el("h3",{id:"whoname"},""),el("small",{},`${D.cl} · Team ${D.g} · tiles ${tileName(D.g,0)}–${tileName(D.g,9)}`+((RESV[D.g]||[]).length?` · lake ${RESV[D.g].join(", ")}`:"")))),el("div",{class:"badges",id:"badges",style:"margin-top:10px"})));
+ p.append(el("div",{class:"card"},el("div",{class:"who"},el("span",{id:"bigemb"}),el("div",{},el("h3",{id:"whoname"},""),el("small",{},`${D.cl} · Team ${D.g} · tiles ${tileName(D.g,0)}–${tileName(D.g,9)}`+((RESV[D.g]||[]).length?` · lake ${RESV[D.g].join(", ")}`:"")))),el("div",{class:"badges",id:"badges",style:"margin-top:10px"}),(()=>{const a=awChips(D.cl,String(D.g),true);return a?el("div",{class:"awrow"},el("small",{},"Team awards (from your saved codes)"),a):null})()));
  const c=checks(D);
  p.append(el("div",{class:"stabs",role:"tablist"},...[[1,"Shape the land","Integers"],[2,"Choose the zones","Fractions"],[3,"Raise the buildings","Expressions"],[4,"City rules","Inequalities"]].map(([n,a,b])=>el("button",{class:"stb","aria-selected":station===n,style:`--u:${UCOL[n-1]};--ut:${UT[n-1]}`,onclick:()=>{station=n;note="";renderMine()}},el("small",{},`Station ${n} · ${b}`),el("b",{},a),el("i",{},"")))));
  p.append(el("details",{class:"ex"},el("summary",{},EX[station][0]),el("p",{},EX[station][1])));
@@ -758,7 +783,7 @@ function showCode(fin){const c=checks(D);const u=station;const ok=c[u].filter(x=
 function renderTeacher(){const p=$("#pane-teacher");p.innerHTML="";
  p.append(el("div",{class:"sec"},el("h2",{},"Teacher: add districts to the class city"),el("p",{class:"lede"},"Paste the codes from Teams, one per line. Codes from different classes can go in together: each code carries its class and goes to that class's city. Every check is recalculated here from the students' numbers and working."),classPick()));
  const ta=el("textarea",{id:"paste",rows:"5",placeholder:"C2040-7A-G4-F-…"});const out=el("div",{class:"prev"});const msg=el("p",{class:"hint"});let found=[];
- const doCheck=(auto)=>{TPASTE=ta.value;const tok=ta.value.split(/\s+/).filter(Boolean);const lines=[];found=[];for(let i=0;i<tok.length;i++){let t=tok[i].replace(/^[^C]*(?=C2040-)/,"");if(!t.startsWith("C2040-"))continue;let r=dec(t),j=i;while(!r&&j+1<tok.length&&!tok[j+1].includes("C2040-")&&j-i<12){j++;t+=tok[j];r=dec(t)}lines.push(t);if(r){found.push(r);i=j}}const bad=lines.length-found.length;out.innerHTML="";
+ const doCheck=(auto)=>{TPASTE=ta.value;const tok=ta.value.replace(/C2040-(?=7[A-H]-G)/g," C2040-").split(/\s+/).filter(Boolean);const lines=[];found=[];for(let i=0;i<tok.length;i++){let t=tok[i].replace(/^[^C]*(?=C2040-)/,"");if(!t.startsWith("C2040-"))continue;let r=dec(t),j=i;while(!r&&j+1<tok.length&&!tok[j+1].includes("C2040-")&&j-i<12){j++;t+=tok[j];r=dec(t)}lines.push(t);if(r){found.push(r);i=j}}const bad=lines.length-found.length;out.innerHTML="";
   PREV={};found.forEach(f=>{const pc=(PREV[f.d.cl]=PREV[f.d.cl]||{});pc[f.d.g]=mergeCode(pc[f.d.g]||STATE.cities[f.d.cl].districts[f.d.g],f)});
   if(found.length&&!PREV[CL]&&auto!==true){setClass(found[0].d.cl);return}
   applyWorld("teacher");dirty=true;
@@ -771,8 +796,24 @@ function renderTeacher(){const p=$("#pane-teacher");p.innerHTML="";
  if(TPASTE){ta.value=TPASTE;setTimeout(()=>doCheck(true),0)}
  const rfl=el("div",{id:"trefl",class:"sec"});setTimeout(()=>p.append(rfl),0);
  p.append(ta,el("div",{class:"ctl"},el("button",{class:"btn ghost",onclick:()=>doCheck()},"Check codes"),
-  el("button",{class:"btn",onclick:async()=>{if(!found.length){msg.textContent="Check the codes first.";return}found.forEach(f=>{const dc=STATE.cities[f.d.cl].districts;dc[f.d.g]=mergeCode(dc[f.d.g],f)});await publish(msg);PREV={};TPASTE="";applyWorld("teacher");dirty=true}},"Save to the class city"),msg),out);
- const saved=Object.keys(city());if(CL&&saved.length){p.append(el("h3",{class:"sub"},`Saved districts · ${CL}`),el("div",{class:"roster"},...saved.map(g=>{const d=city()[g];const rm=el("button",{class:"btn ghost sm",onclick:async e=>{if(e.target.dataset.sure!=="1"){e.target.dataset.sure="1";e.target.textContent="Tap again to remove";return}delete STATE.cities[CL].districts[g];await publish(msg)}},"Remove");return el("div",{class:"co on",style:`--g:${GCOL[g-1]}`},emb(+g),el("div",{},el("b",{},`Team ${g} · ${dname(d)}`),el("small",{},d.L?layerLine(d):`${status(d)} · ${d.p} checks`)),rm)})))}}
+  el("button",{class:"btn",onclick:async()=>{if(!found.length){msg.textContent="Check the codes first.";return}found.forEach(f=>{const dc=STATE.cities[f.d.cl].districts;dc[f.d.g]=mergeCode(dc[f.d.g],f)});await publish(msg);PREV={};TPASTE="";applyWorld("teacher");dirty=true;const old=document.querySelector(".mw");if(old)old.replaceWith(missingWork())}},"Save to the class city"),msg),out);
+ p.append(missingWork());const saved=Object.keys(city());if(CL&&saved.length){p.append(el("h3",{class:"sub"},`Saved districts · ${CL}`),el("div",{class:"roster"},...saved.map(g=>{const d=city()[g];const rm=el("button",{class:"btn ghost sm",onclick:async e=>{if(e.target.dataset.sure!=="1"){e.target.dataset.sure="1";e.target.textContent="Tap again to remove";return}delete STATE.cities[CL].districts[g];await publish(msg)}},"Remove");return el("div",{class:"co on",style:`--g:${GCOL[g-1]}`},emb(+g),el("div",{},el("b",{},`Team ${g} · ${dname(d)}`),el("small",{},d.L?layerLine(d):`${status(d)} · ${d.p} checks`)),rm)})))}}
+
+function missingWork(){const box=el("details",{class:"mw",open:""});const SPR=[1,2,3];
+ const st=(d,n)=>{if(!d)return"no";if(d.L){const x=d.L[n];return x?(x.fin?"ok":"dr"):"no"}return n<=3&&d.fin?"ok":n<=3?"dr":"no"};
+ let tot=0,done=0;const owe={};
+ const tables=Object.keys(CLASSES).map(c=>{const ds=STATE.cities[c].districts;const rows=[];let comp=0;
+  for(let gN=1;gN<=CLASSES[c];gN++){const d=ds[gN];const ss=[1,2,3,4].map(n=>st(d,n));const miss=SPR.filter((n,i)=>ss[i]!=="ok");tot+=3;done+=3-miss.length;if(!miss.length)comp++;else(owe[c]=owe[c]||[]).push(`Team ${gN} (${d?dname(d):tname(gN)}): ${miss.length>1?"Stations":"Station"} ${miss.join(", ")}`);
+   rows.push(el("tr",{},el("td",{class:"tn"},emb(gN),el("span",{title:`Team ${gN}`},`${d?dname(d):tname(gN)}`)),...ss.map((x,i)=>el("td",{class:"c "+x+(i===3?" a4":"")},x==="ok"?"✓":x==="dr"?"Draft":"—"))))}
+  return el("div",{class:"mwc"},el("div",{class:"mwh"},el("b",{},c),el("small",{},`Sprint complete: ${comp}/${CLASSES[c]} teams`)),
+   el("table",{class:"mwt"},el("thead",{},el("tr",{},el("th",{},"Team"),el("th",{},"A1"),el("th",{},"A2"),el("th",{},"A3"),el("th",{class:"a4"},"A4*"))),el("tbody",{},...rows)))});
+ const pct=Math.round(done/tot*100);const txtList=()=>Object.keys(owe).map(c=>`${c}\n`+owe[c].map(x=>"• "+x).join("\n")).join("\n\n");
+ const cmsg=el("span",{class:"hint"});
+ box.append(el("summary",{},el("b",{},"Missing work · all classes"),el("small",{},` Sprint (Stations 1–3): ${done}/${tot} station codes saved · ${pct}%`)),
+  el("div",{class:"ctl"},el("button",{class:"btn sm",onclick:async()=>{const t="City 2040 · Founding Sprint (Stations 1–3) still to send:\n\n"+txtList();try{await navigator.clipboard.writeText(t);cmsg.textContent="Copied. Paste it into Teams."}catch(e){const a=el("textarea",{});a.value=t;document.body.append(a);a.select();try{document.execCommand("copy");cmsg.textContent="Copied. Paste it into Teams."}catch(e2){cmsg.textContent="Could not copy: select the list below instead."}a.remove()}}},"Copy reminder list"),cmsg),
+  el("p",{class:"hint"},"✓ final code saved · Draft = saved but not final · — = not sent yet. *A4 is not due until Thu 3 Dec; it is shown for teams who started early. Team names only, no student names."),
+  el("div",{class:"mwg"},...tables));
+ return box}
 async function publish(msg){STATE.updated=Date.now();
  const st=JSON.stringify(STATE).replace(/</g,"\\u003c");
  const html=SRC_HTML.replace(/(<script type="application\/json" id="state">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+st+b);
@@ -826,7 +867,7 @@ function drawGreen(){
   g.strokeStyle=rgba(C.waterHi,.5);g.lineWidth=1;g.beginPath();ell(ox,oz,.45,.3,24).forEach(([u,v],k)=>{const p=P(u,RGY+.003,v);k?g.lineTo(...p):g.moveTo(...p)});g.closePath();g.stroke()}
  // lawn inside the ring road
  flat([[-1.8,-1.8],[39.8,-1.8],[39.8,17.8],[-1.8,17.8]],shade("#7DB463",1));for(let x=-1.8;x<39.8;x+=1.2)flat([[x,-1.8],[Math.min(x+.6,39.8),-1.8],[Math.min(x+.6,39.8),17.8],[x,17.8]],rgba("#A8D88A",.22*(1-NIGHT*.6)));
- const dr=Math.max(.8,CAM.s/34);for(const[x,z,c,sz]of RGRASS){const p=P(x,RGY+.002,z);g.fillStyle=shade(c,1);g.beginPath();g.arc(p[0],p[1],sz*dr,0,7);g.fill()}}
+ const dr=Math.max(.8,CAM.s/34);if(!RLITE)for(const[x,z,c,sz]of RGRASS){const p=P(x,RGY+.002,z);g.fillStyle=shade(c,1);g.beginPath();g.arc(p[0],p[1],sz*dr,0,7);g.fill()}}
 
 const RBOATS=[];{const r=rng(5);for(let k=0;k<7;k++)RBOATS.push({a:r()*6.28,rx:28+r()*6,rz:16+r()*5,v:(r()<.5?-1:1)*(.012+r()*.01),c:["#FFFFFF","#F2ECE0","#E8664A"][k%3]})}
 const RGLINT=[];{const r=rng(11);for(let k=0;k<140;k++)RGLINT.push([-30+r()*100,-25+r()*70,r()*6.28,.5+r()*1.2])}
@@ -836,14 +877,14 @@ function drawSea(t){const q=[[-90,-70],[130,-70],[130,90],[-90,90]].map(([x,z])=
  const top=Math.min(...q.map(p=>p[1])),bot=Math.max(...q.map(p=>p[1]));const gr=g.createLinearGradient(0,Math.max(0,top),0,Math.min(H,bot));
  gr.addColorStop(0,shade("#2B7FB0",1));gr.addColorStop(.55,shade("#2F9CC8",1));gr.addColorStop(1,shade("#46B8DA",1));poly(q,gr,null);
  // glints
- g.strokeStyle=rgba("#FFFFFF",lerp(.35,.15,NIGHT));g.lineWidth=Math.max(1,CAM.s*.03);for(const[x,z,ph,l]of RGLINT){if(x>-8&&x<46&&z>-8&&z<24)continue;const a=.5+.5*Math.sin(t*1.3+ph);if(a<.35)continue;g.globalAlpha=a;const p1=P(x,RGY-.25,z),p2=P(x+l*.6,RGY-.25,z+.1);g.beginPath();g.moveTo(...p1);g.lineTo(...p2);g.stroke()}g.globalAlpha=1;
+ g.strokeStyle=rgba("#FFFFFF",lerp(.35,.15,NIGHT));g.lineWidth=Math.max(1,CAM.s*.03);if(!RLITE)for(const[x,z,ph,l]of RGLINT){if(x>-8&&x<46&&z>-8&&z<24)continue;const a=.5+.5*Math.sin(t*1.3+ph);if(a<.35)continue;g.globalAlpha=a;const p1=P(x,RGY-.25,z),p2=P(x+l*.6,RGY-.25,z+.1);g.beginPath();g.moveTo(...p1);g.lineTo(...p2);g.stroke()}g.globalAlpha=1;
  // shallow lagoon + foam around the island
  poly(ISL(29,17.4,6).map(([x,z])=>P(x,RGY-.25,z)),shade("#58C3DC",1),null);poly(ISL(27.4,15.9,7).map(([x,z])=>P(x,RGY-.25,z)),shade("#7FD8E6",1),null);
  g.strokeStyle=rgba("#FFFFFF",.7*(.6+.4*Math.sin(t*1.6)));g.lineWidth=Math.max(1.5,CAM.s*.05);const f=.4+.15*Math.sin(t*1.6);
  poly(ISL(25.8+f,14.4+f).map(([x,z])=>P(x,RGY-.24,z)),null,rgba("#FFFFFF",.65),Math.max(1.5,CAM.s*.05));
- const isl=ISL(25.8,14.4);poly(isl.map(([x,z])=>P(x,RGY-.26,z)),shade("#B48E58",1),null);poly(isl.map(([x,z])=>P(x,RGY-.05,z)),shade("#D9B77C",1),null);poly(isl.map(([x,z])=>P(x,RGY,z)),shade("#EBD3A0",1),null);
+ const gil=[...Array(80)].map((_,k)=>{const a=k/80*Math.PI*2,c=Math.cos(a),sn=Math.sin(a);return[GISL[0]+(GRX+2)*Math.sign(c)*Math.pow(Math.abs(c),.4),GISL[1]+(GRZ+2)*Math.sign(sn)*Math.pow(Math.abs(sn),.4)]});poly(gil.map(([x,z])=>P(x,RGY-.25,z)),shade("#7FD8E6",1),null);const gi=gil.map(([x,z])=>[GISL[0]+(x-GISL[0])*GRX/(GRX+2),GISL[1]+(z-GISL[1])*GRZ/(GRZ+2)]);poly(gi.map(([x,z])=>P(x,RGY-.26,z)),shade("#B48E58",1),null);poly(gi.map(([x,z])=>P(x,RGY,z)),shade("#EBD3A0",1),null);if(gradeGoal().pct>=.5){poly(gi.map(([x,z])=>P(GISL[0]+(x-GISL[0])*.8,RGY+.001,GISL[1]+(z-GISL[1])*.8)),shade("#7DB463",1),null)}const isl=ISL(25.8,14.4);poly(isl.map(([x,z])=>P(x,RGY-.26,z)),shade("#B48E58",1),null);poly(isl.map(([x,z])=>P(x,RGY-.05,z)),shade("#D9B77C",1),null);poly(isl.map(([x,z])=>P(x,RGY,z)),shade("#EBD3A0",1),null);
  if(NIGHT>.2){const c=P(RCEN[0],RGY-.25,RCEN[1]-30);const gm=g.createRadialGradient(c[0],c[1],0,c[0],c[1],CAM.s*12);gm.addColorStop(0,rgba("#DCE8FF",.22*NIGHT));gm.addColorStop(1,rgba("#DCE8FF",0));g.fillStyle=gm;g.fillRect(0,0,W,H)}}
-function drawBoat(b){const x=RCEN[0]+Math.cos(b.a)*b.rx,z=RCEN[1]+Math.sin(b.a)*b.rz,dir=b.a+(b.v>0?Math.PI/2:-Math.PI/2);const dx=Math.cos(dir),dz=Math.sin(dir),y=RGY-.24;
+function drawBoat(b){const x=b._x!=null?b._x:RCEN[0]+Math.cos(b.a)*b.rx,z=b._z!=null?b._z:RCEN[1]+Math.sin(b.a)*b.rz,dir=b.a+(b.v>0?Math.PI/2:-Math.PI/2);const dx=Math.cos(dir),dz=Math.sin(dir),y=RGY-.24;
  const L=.55,Wd=.2;const hull=[[x+dx*L,z+dz*L],[x-dz*Wd-dx*L*.6,z+dx*Wd-dz*L*.6],[x+dz*Wd-dx*L*.6,z-dx*Wd-dz*L*.6]];
  g.strokeStyle=rgba("#FFFFFF",.55);g.lineWidth=Math.max(1,CAM.s*.03);g.beginPath();g.moveTo(...P(x-dx*L*.6,y,z-dz*L*.6));g.lineTo(...P(x-dx*L*2.4,y,z-dz*L*2.4));g.stroke();
  poly(hull.map(([u,v])=>P(u,y+.06,v)),shade(b.c,1),"rgba(0,0,0,.3)",1);
@@ -876,24 +917,90 @@ function drawCar(c){const p=RPATHS[c.pi];const[x,z,a]=pathAt(p,(c.u%1)*c.len);co
  poly(q.map(([u,v])=>P(u,y+hgt,v)),shade(c.col,1),"rgba(0,0,0,.35)",1);
  if(NIGHT>.15){const h=P(x+dx*L*.75,y+.03,z+dz*L*.75);const gr=g.createRadialGradient(h[0],h[1],0,h[0],h[1],CAM.s*.3);gr.addColorStop(0,rgba("#FFF6DA",.8*NIGHT));gr.addColorStop(1,rgba("#FFF6DA",0));g.fillStyle=gr;g.beginPath();g.arc(h[0],h[1],CAM.s*.3,0,7);g.fill();
   const tl=P(x-dx*L*.55,y+.04,z-dz*L*.55);g.fillStyle=rgba("#FF4A3A",.85*NIGHT);g.beginPath();g.arc(tl[0],tl[1],Math.max(1.5,CAM.s*.035),0,7);g.fill()}}
-function regionTick(t){const tg=RFOC?{tx:ROFF[RFOC][0]+5,tz:ROFF[RFOC][1]+3,s:64}:{tx:RCEN[0],tz:RCEN[1]+.5,s:31};
+function regionTick(t){const tg=RFOC?{tx:ROFF[RFOC][0]+5,tz:ROFF[RFOC][1]+3,s:64}:{tx:RCEN[0]-1,tz:-.2,s:23.5};
  RCAM.tx+=(tg.tx-RCAM.tx)*.06;RCAM.tz+=(tg.tz-RCAM.tz)*.06;RCAM.s+=(tg.s-RCAM.s)*.06;RNIGHT+=(RNT-RNIGHT)*.05;
  if(RTOUR&&t-RTOURT>6){RTOURT=t;RTI=(RTI+1)%(RLIST.length+1);RFOC=RTI<RLIST.length?RLIST[RTI]:null;renderRegion()}}
-function drawRegion(t){TNOW=t;CAM=camFor();NIGHT=RNIGHT;
+
+const RLM={};RLIST.forEach((c,k)=>{const[ox,oz]=ROFF[c];RLM[c]=[ox+5,Math.floor(k/3)?20.3:-4.3]});
+const nearLM=(x,z)=>RLIST.some(c=>Math.hypot(x-RLM[c][0],z-RLM[c][1])<1.5);
+function addLandmark(c,pct,t){const[lx,lz]=RLM[c],col=RCOL[c],y=RGY;
+ addCustom(()=>{flat([[lx-.95,lz-.95],[lx+.95,lz-.95],[lx+.95,lz+.95],[lx-.95,lz+.95]],shade("#D8CCB6",1));poly([[lx-.95,lz-.95],[lx+.95,lz-.95],[lx+.95,lz+.95],[lx-.95,lz+.95]].map(([x,z])=>P(x,y+.003,z)),null,rgba(col,.95),Math.max(2,CAM.s*.06));
+  if(pct<=0){g.setLineDash([4,4]);poly([[lx-.5,lz-.5],[lx+.5,lz-.5],[lx+.5,lz+.5],[lx-.5,lz+.5]].map(([x,z])=>P(x,y+.004,z)),null,rgba(col,.9),2);g.setLineDash([])}},lx,lz,y,-1300);
+ if(pct<=0)return;
+ const pod=.32*Math.min(1,pct/.25);addBox(lx-.62,lx+.62,y,y+pod,lz-.62,lz+.62,"#E7E2D6",{win:{cols:4,m:.15,base:.05,col:"#3E4C5A",a:.85,litP:.8,seed:7}});
+ if(pct>.25){const H=2.7*Math.min(1,(pct-.25)/.75);const tc=mix(C.glass,col,.35);
+  addBox(lx-.36,lx+.36,y+pod,y+pod+H*.92,lz-.36,lz+.36,pct>=.75?tc:"#BFC4CA",{dz:.001,win:pct>=.75?{cols:4,m:.06,base:0,col:"#2F4A63",a:.6,litP:.75,seed:11,mull:true}:{cols:3,m:.3,base:.02,col:"#7C838D",a:.5,litP:0,seed:3}});
+  if(pct>=1){addCyl(lx,lz,.26,y+pod+H*.92,y+pod+H,"#F4F1EA",{top:col,dz:.002});addCustom(()=>{const p=P(lx,y+pod+H+.25,lz);const k=.5+.5*Math.sin(t*3);const R=CAM.s*(.6+.5*k);const gr=g.createRadialGradient(p[0],p[1],0,p[0],p[1],R);gr.addColorStop(0,rgba("#FFFFFF",.95));gr.addColorStop(.3,rgba(col,.75));gr.addColorStop(1,rgba(col,0));g.fillStyle=gr;g.beginPath();g.arc(p[0],p[1],R,0,7);g.fill();
+    const r=rng(Math.floor(t*4));for(let q=0;q<14;q++){const a=r()*6.28,d=CAM.s*(.6+r()*1.4);g.fillStyle=rgba(["#FFD54F","#FFFFFF",col][q%3],.9);g.beginPath();g.arc(p[0]+Math.cos(a)*d,p[1]+Math.sin(a)*d*.8-CAM.s*.4,Math.max(1.5,CAM.s*.05),0,7);g.fill()}},lx,lz,y+pod+H,.05)}
+  else addCustom(()=>{const top=y+pod+H*.92;const m0=P(lx+.78,y,lz+.78),m1=P(lx+.78,top+.7,lz+.78),j0=P(lx+.78-1.1,top+.7,lz+.78),j1=P(lx+.78+.45,top+.7,lz+.78),hk=P(lx+.1,top+.25,lz+.78);
+   g.strokeStyle=shade("#F2B705",1);g.lineWidth=Math.max(2,CAM.s*.05);g.beginPath();g.moveTo(...m0);g.lineTo(...m1);g.moveTo(...j0);g.lineTo(...j1);g.stroke();g.strokeStyle=shade("#4A4F57",1);g.lineWidth=1;g.beginPath();g.moveTo(P(lx+.1,top+.7,lz+.78)[0],P(lx+.1,top+.7,lz+.78)[1]);g.lineTo(...hk);g.stroke();
+   if(NIGHT>.2){g.fillStyle=rgba("#FF4A3A",NIGHT*(.5+.5*Math.sin(t*3)));g.beginPath();g.arc(m1[0],m1[1],3,0,7);g.fill()}},lx+.78,lz+.78,y,.04)}}
+
+let LANG=(()=>{try{return localStorage.getItem("c2040-lang")||"en"}catch(e){return"en"}})();
+const T=(en,ar)=>LANG==="ar"?ar:en;
+let RLITE=(()=>{try{return localStorage.getItem("c2040-lite")==="1"}catch(e){return false}})(),RLITEAUTO=false,RPERF=[];
+let RSEA=0,RTL=null;
+const GISL=[12,-21],GRX=8,GRZ=5.5;
+function gradeGoal(){let a=0,b=0;for(const c of RLIST){const x=classStats(c);a+=x.lay;b+=x.tot}return{lay:a,tot:b,pct:b?a/b:0}}
+function tlFilter(ds,TT){const o={};for(const gk in ds){const d=ds[gk];if(!d.L){o[gk]=d;continue}const L={};for(const n in d.L)if((d.L[n].at||0)<=TT)L[n]=d.L[n];if(!Object.keys(L).length)continue;
+ const nd=Object.assign({},d,{L});if(!L[1])nd.h=Array(10).fill("0");if(!L[2]&&!L[3]&&!L[4])nd.z=Array(10).fill("");if(!L[3]&&!L[4])nd.f=Array(10).fill("");if(!L[4])nd.ok4=Array(10).fill("");o[gk]=nd}return o}
+function tlRange(){let a=Infinity,b=0;for(const c of RLIST)for(const d of Object.values(STATE.cities[c].districts))if(d.L)for(const n in d.L){const at=d.L[n].at||0;if(at){a=Math.min(a,at);b=Math.max(b,at)}}return a<b?[a-3600e3,b]:null}
+/* team awards (from saved codes only) */
+const AW={first:["🥇","First to finish","أول من أنهى","First team in the class to send all three Sprint codes","أول فريق في الصف يرسل رموز مرحلة التأسيس الثلاثة"],
+ green:["🌴","Greenest district","المنطقة الأكثر خضرة","Most park tiles in the class","أكثر بلاطات حدائق في الصف"],
+ tall:["🏙️","Tallest legal tower","أعلى برج نظامي","Tallest building that keeps to the 40 m rule","أعلى مبنى يلتزم بقاعدة 40 م"],
+ homes:["🏠","Most homes","أكثر المساكن","Most inhabitants in the class","أكبر عدد من السكان في الصف"],
+ rules:["🛫","Rules ahead","سبّاق في القوانين","City rules (A4) final before it was due","أنهى قوانين المدينة (المهمة 4) قبل موعدها"],
+ all4:["⭐","Four stations","أربع محطات","All four stations final","المحطات الأربع نهائية"]};
+function awards(c){const ds=STATE.cities[c].districts,A={},gs=Object.keys(ds);const add=(gk,k)=>{(A[gk]=A[gk]||[]).push(k)};
+ const fin=(d,n)=>d.L?!!(d.L[n]&&d.L[n].fin):!!d.fin&&n<=3;const at=(d,n)=>d.L&&d.L[n]?(d.L[n].at||0):0;
+ const win=(score,need,k)=>{let best=null;gs.forEach(gk=>{const d=ds[gk];if(!fin(d,need))return;const v=score(d);if(v<=0)return;if(!best||v>best.v||(v===best.v&&at(d,need)<best.a))best={gk,v,a:at(d,need)}});if(best)add(best.gk,k)};
+ let f=null;gs.forEach(gk=>{const d=ds[gk];if(![1,2,3].every(n=>fin(d,n)))return;const a=Math.max(at(d,1),at(d,2),at(d,3));if(!f||a<f.a)f={gk,a}});if(f)add(f.gk,"first");
+ win(d=>d.z.filter(z=>z==="P").length,2,"green");win(d=>{const x=districtStats(d).tall;return x<=40?x:0},3,"tall");win(d=>districtStats(d).pop,3,"homes");
+ gs.forEach(gk=>{if(fin(ds[gk],4))add(gk,"rules");if([1,2,3,4].every(n=>fin(ds[gk],n)))add(gk,"all4")});return A}
+const awChips=(c,gk,big)=>{const a=(awards(c)[gk]||[]);if(!a.length)return null;return el("span",{class:"aws"+(big?" big":"")},...a.map(k=>el("span",{class:"aw",title:T(AW[k][3],AW[k][4])},AW[k][0],big?el("b",{},T(AW[k][1],AW[k][2])):null)))};
+
+const inGI=(x,z)=>Math.pow(Math.abs(x-GISL[0])/GRX,2.5)+Math.pow(Math.abs(z-GISL[1])/GRZ,2.5)<.85;
+{const r=rng(321);for(let k=0;k<22;k++){const x=GISL[0]-GRX+r()*2*GRX,z=GISL[1]-GRZ+r()*2*GRZ;if(inGI(x,z)&&Math.hypot(x-GISL[0],z-GISL[1])>2.2)RPALMS.push({x,z,s:1.3+r()*.5,rot:r()*6})}}
+function goalSign(x,y,z,title,sub,col,on){const p=P(x,y,z);font(F.disp,24,700);const w1=g.measureText(title).width;font(F.mono,14,600);const w2=g.measureText(sub).width;const bw=Math.max(w1,w2)+40,bh=56;
+ g.save();rrect(p[0]-bw/2,p[1]-bh/2,bw,bh,14);g.fillStyle=on?"rgba(255,255,255,.95)":"rgba(255,255,255,.8)";g.fill();g.strokeStyle=col;g.lineWidth=3;if(!on)g.setLineDash([8,6]);g.stroke();g.setLineDash([]);
+ font(F.disp,24,700);txt(title,p[0],p[1]-2,"#1B2140","center");font(F.mono,14,600);txt(sub,p[0],p[1]+18,"#5D6880","center");g.restore()}
+function addGoal(t){const gp=gradeGoal().pct,open=gp>=.5,mar=gp>=1;const bx=GISL[0],z0=-6.2,z1=GISL[1]+GRZ-.4;
+ // road from the avenue to the shore
+ addCustom(()=>flat([[11.55,-6.3],[12.45,-6.3],[12.45,-2.6],[11.55,-2.6]],shade("#3E434B",1)),12,-4.4,RGY,-1450);
+ if(open){addBox(bx-.5,bx+.5,RGY-.06,RGY+.04,z1,z0,"#CFC6B4",{top:"#D8D0BF",dz:-50});for(let z=z1+1;z<z0-.5;z+=1.6){addBox(bx-.42,bx-.3,RGY-.3,RGY-.06,z,z+.14,"#BDB3A2",{dz:-60});addBox(bx+.3,bx+.42,RGY-.3,RGY-.06,z,z+.14,"#BDB3A2",{dz:-60})}
+  for(let z=z1+.6;z<z0;z+=1.4){addCustom(()=>drawLamp(bx-.45,z,true,C.gold),bx-.45,z,RGY,.02);addCustom(()=>drawLamp(bx+.45,z+.7,true,C.gold),bx+.45,z+.7,RGY,.02)}
+  addCyl(GISL[0],GISL[1],1.6,RGY,RGY+.32,"#E7E2D6",{top:"#7DB463",bands:true});addCyl(GISL[0],GISL[1],1.15,RGY+.32,RGY+.34,"#5F9F4B",{top:"#5F9F4B"})}
+ else addCustom(()=>{g.setLineDash([CAM.s*.25,CAM.s*.18]);poly([[bx-.5,z1],[bx+.5,z1],[bx+.5,z0],[bx-.5,z0]].map(([x,z])=>P(x,RGY-.22,z)),null,rgba("#FFFFFF",.85),Math.max(2,CAM.s*.06));g.setLineDash([])},bx,(z0+z1)/2,RGY,-1650);
+ // marina on the south shore
+ const mz=22.3;if(mar){for(let k=0;k<4;k++){const x=15.5+k*2.3;addBox(x-.12,x+.12,RGY-.26,RGY-.14,mz,mz+2.2,"#CDBFA8",{dz:-40});
+   for(let q=0;q<2;q++){const bz=mz+.6+q*1.0;addCustom(()=>drawBoat({a:0,rx:0,rz:0,v:1,c:["#FFFFFF","#E8664A","#F2ECE0"][(k+q)%3],_x:x+.55,_z:bz}),x+.55,bz,RGY,-30)}}
+  addBox(14.8,24.6,RGY-.26,RGY-.1,mz-.3,mz+.25,"#CDBFA8",{dz:-45})}
+ else addCustom(()=>{g.setLineDash([CAM.s*.2,CAM.s*.15]);for(let k=0;k<4;k++){const x=15.5+k*2.3;poly([[x-.12,mz],[x+.12,mz],[x+.12,mz+2.2],[x-.12,mz+2.2]].map(([u,v])=>P(u,RGY-.22,v)),null,rgba("#FFFFFF",.8),2)}g.setLineDash([])},19,mz+1,RGY,-1650);
+ RGOALSIGNS={gp,open,mar}}
+let RGOALSIGNS=null;
+/* A5 preview: desalination plant on the east shore, main pipe along the boulevard, planned branches */
+function addWater(t){addBox(41.6,43.2,RGY,RGY+.42,9.9,11.3,"#D7DCE0",{win:{cols:5,m:.2,base:.06,col:"#5A6E80",a:.8,litP:.7,seed:5}});addCyl(41.95,12.0,.32,RGY,RGY+.55,C.steel,{top:"#DCE1E6",bands:true});addCyl(42.85,12.0,.32,RGY,RGY+.55,C.steel,{top:"#DCE1E6",bands:true});
+ addCustom(()=>{const y=RGY+.01;g.lineCap="round";g.strokeStyle=rgba(C.pipe,.95);g.lineWidth=Math.max(2,CAM.s*.07);g.beginPath();g.moveTo(...P(45.2,y,10.6));g.lineTo(...P(41.6,y,10.6));g.lineTo(...P(40.2,y,10.6));g.lineTo(...P(40.2,y,8));g.lineTo(...P(-2.2,y,8));g.stroke();
+  // flow
+  g.fillStyle=rgba("#E6FAFF",.95);const L=46,sp=1.2;for(let d=((t*1.5)%sp);d<L;d+=sp){let x,z;if(d<5){x=45.2-d;z=10.6}else if(d<7.6){x=40.2;z=10.6-(d-5)}else{x=40.2-(d-7.6);z=8}if(x<-2.2)break;const p=P(x,y+.01,z);g.beginPath();g.arc(p[0],p[1],Math.max(1.5,CAM.s*.045),0,7);g.fill()}
+  // planned branches to each city
+  g.setLineDash([CAM.s*.15,CAM.s*.15]);g.strokeStyle=rgba(C.pipe,.6);g.lineWidth=Math.max(1.5,CAM.s*.045);g.beginPath();RLIST.forEach((c,k)=>{const[ox,oz]=ROFF[c];const zz=Math.floor(k/3)?oz-.4:oz+6.4;g.moveTo(...P(ox+5.2,y,8));g.lineTo(...P(ox+5.2,y,zz))});g.stroke();g.setLineDash([])},20,8,RGY,-1440)}
+function drawRegion0(t){TNOW=t;CAM=camFor();NIGHT=RNIGHT;
  const sk=g.createLinearGradient(0,0,0,H);sk.addColorStop(0,mix("#CFE3F8","#0B1230",NIGHT));sk.addColorStop(1,mix("#F3F7FC","#24345E",NIGHT));g.fillStyle=sk;g.fillRect(0,0,W,H);
- drawSea(t);if(NIGHT>.3){const r=rng(9);g.fillStyle=rgba("#FFFFFF",(NIGHT-.3)*.9);for(let k=0;k<90;k++){const x=r()*W,y=r()*H*.55,s=r()*1.6+.4;g.globalAlpha=.4+.6*Math.abs(Math.sin(t*.8+k));g.fillRect(x,y,s,s)}g.globalAlpha=1}
+ drawSea(t);if(NIGHT>.3&&!RLITE){const r=rng(9);g.fillStyle=rgba("#FFFFFF",(NIGHT-.3)*.9);for(let k=0;k<90;k++){const x=r()*W,y=r()*H*.55,s=r()*1.6+.4;g.globalAlpha=.4+.6*Math.abs(Math.sin(t*.8+k));g.fillRect(x,y,s,s)}g.globalAlpha=1}
  const S={p1:1,p2:1,p3:1,p4:0,p5:0,p6:0,p7:0,p8:0,p9:0,hl:{},focus:null,water:0,wall:0,t4f:14,t4hot:0};
  const keepCL=CL;let ALL=[];const st={};
  for(const c of RLIST){st[c]=classStats(c);CL=c;applyWorld("city");OFF=ROFF[c];buildCity(t,S);
-  {const have=STATE.cities[c].districts;const tg=(i,j)=>Math.floor(j/2)*2+Math.floor(i/5)+1;OBJ=OBJ.filter(o=>!(o.k==="box"&&o.o&&o.o.dz===-100)&&!(o.o&&o.o.tile&&!have[tg(o.o.tile.i,o.o.tile.j)]));const miss=[];for(let gN=1;gN<=6;gN++)if(!have[gN])miss.push(gN);const oc=OFF;st[c].miss=miss;st[c].off=oc}const zs=ZONE.slice();for(const o of OBJ){if(o.o&&o.o.skip){const sk=o.o.skip,m={};[[0,0,1],[0,0,-1],[1,0,0],[-1,0,0]].forEach(n=>m[n.join()]=sk(n));o.o.skip=n=>m[n.join()]}}
+  {const have=STATE.cities[c].districts;const tg=(i,j)=>Math.floor(j/2)*2+Math.floor(i/5)+1;OBJ=OBJ.filter(o=>!(o.k==="box"&&o.o&&o.o.dz===-100)&&!(o.o&&o.o.tile&&!have[tg(o.o.tile.i,o.o.tile.j)]));const miss=[];for(let gN=1;gN<=6;gN++)if(!have[gN])miss.push(gN);const oc=OFF;st[c].miss=miss;st[c].off=oc;st[c].flood=0;if(RSEA>0){for(let j=0;j<GD;j++)for(let i=0;i<GW;i++){if(!have[tg(i,j)]||ZONE[j][i]==="W")continue;const e=ELEV[j][i];if(e*10<RSEA){st[c].flood++;addBox(i,i+1,topY(e),topY(RSEA/10),j,j+1,C.water,{alpha:.78,top:"#4C9BD0",ripple:true,edge:"rgba(0,0,0,0)",dz:.0004})}}}}const zs=ZONE.slice();for(const o of OBJ){if(o.o&&o.o.skip){const sk=o.o.skip,m={};[[0,0,1],[0,0,-1],[1,0,0],[-1,0,0]].forEach(n=>m[n.join()]=sk(n));o.o.skip=n=>m[n.join()]}}
   ALL=ALL.concat(OBJ)}
  CL=keepCL;OFF=[0,0];SHADOWS=[];OBJ=[];
  addCustom(drawGreen,RCEN[0],RCEN[1],RGY,-1800);
- addCustom(drawRoads,RCEN[0],RCEN[1],RGY,-1500);for(const c of RLIST){const[ox,oz]=ROFF[c];for(const gN of st[c].miss){if(gN>CLASSES[c])continue;addCustom(()=>drawPlot(ox,oz,gN,RCOL[c]),ox+5,oz+3,RGY,-1400)}}for(const b of RBOATS){b.a+=b.v*0.033;addCustom(()=>drawBoat(b),RCEN[0]+Math.cos(b.a)*b.rx,RCEN[1]+Math.sin(b.a)*b.rz,RGY,-1700)}
+ addCustom(drawRoads,RCEN[0],RCEN[1],RGY,-1500);for(const c of RLIST){const[ox,oz]=ROFF[c];for(const gN of st[c].miss){if(gN>CLASSES[c])continue;addCustom(()=>drawPlot(ox,oz,gN,RCOL[c]),ox+5,oz+3,RGY,-1400)}}if(!RLITE)for(const b of RBOATS){b.a+=b.v*0.033;addCustom(()=>drawBoat(b),RCEN[0]+Math.cos(b.a)*b.rx,RCEN[1]+Math.sin(b.a)*b.rz,RGY,-1700)}
  for(const c of RLIST){const lit=st[c].lit;RLAMP[c].forEach(([x,z],q)=>addCustom(()=>drawLamp(x,z,q<lit,RCOL[c]),x,z,RGY,.02))}
- for(const car of RCARS){car.u+=car.v*0.033*(RTOUR||auto?1:1);addCustom(()=>drawCar(car),pathAt(RPATHS[car.pi],(car.u%1)*car.len)[0],pathAt(RPATHS[car.pi],(car.u%1)*car.len)[1],RGY,.01)}
+ if(!RLITE)for(const car of RCARS){car.u+=car.v*0.033*(RTOUR||auto?1:1);addCustom(()=>drawCar(car),pathAt(RPATHS[car.pi],(car.u%1)*car.len)[0],pathAt(RPATHS[car.pi],(car.u%1)*car.len)[1],RGY,.01)}
  addCyl(RCEN[0],RCEN[1],.16,RGY,RGY+1.5,"#E7E2D6",{top:C.gold,bands:true});addCyl(RCEN[0],RCEN[1],.24,RGY,RGY+.18,"#CDBFA8",{});
- for(const fl of RPALMS){if(!inIsl(fl.x,fl.z))continue;const h=.42*fl.s;addCustom(()=>drawPalm(fl,h,RGY),fl.x,fl.z,RGY)}for(const fl of RTREES){const h=.32*fl.s;addCustom(()=>drawTree(fl,h,RGY),fl.x,fl.z,RGY)}
+ for(const c of RLIST)addLandmark(c,st[c].pct,t);RPALMS.forEach((fl,ix)=>{if(RLITE&&ix%3)return;if(!(inIsl(fl.x,fl.z)||inGI(fl.x,fl.z))||nearLM(fl.x,fl.z))return;const h=.42*fl.s;addCustom(()=>drawPalm(fl,h,RGY),fl.x,fl.z,RGY)});RTREES.forEach((fl,ix)=>{if(RLITE&&ix%2)return;const h=.32*fl.s;addCustom(()=>drawTree(fl,h,RGY),fl.x,fl.z,RGY)});addGoal(t);addWater(t);
  OBJ=ALL.concat(OBJ);drawCity(1);
  // beacon on the monument
  {const p=P(RCEN[0],RGY+1.55,RCEN[1]);const k=.5+.5*Math.sin(t*2.4);const R=CAM.s*(.5+.4*k)*(.4+NIGHT);const gr=g.createRadialGradient(p[0],p[1],0,p[0],p[1],R);gr.addColorStop(0,rgba("#FFF1C4",.95));gr.addColorStop(.3,rgba(C.gold,.55));gr.addColorStop(1,rgba(C.gold,0));g.fillStyle=gr;g.beginPath();g.arc(p[0],p[1],R,0,7);g.fill()}
@@ -901,27 +1008,48 @@ function drawRegion(t){TNOW=t;CAM=camFor();NIGHT=RNIGHT;
  for(const c of RLIST){const[ox,oz]=ROFF[c];const s=st[c];const foc=RFOC===c,hov=RHOV===c;
   const pts=[[ox-.35,RGY+.006,oz-.35],[ox+10.35,RGY+.006,oz-.35],[ox+10.35,RGY+.006,oz+6.35],[ox-.35,RGY+.006,oz+6.35]].map(p=>P(...p));
   g.save();g.globalAlpha=foc?1:hov?.9:.55;poly(pts,null,RCOL[c],foc?5:3);g.restore();
-  const p=P(ox+5,1.5,oz-1.0);const big=Math.max(24,Math.min(36,CAM.s*.9));font(F.disp,big,700);const w1=g.measureText(c).width;font(F.mono,big*.5,600);const sub=`${s.lay}/${s.tot} stations`;const w2=g.measureText(sub).width;
+  const p=P(ox+5,1.5,oz-1.0);const big=Math.max(24,Math.min(36,CAM.s*.9));font(F.disp,big,700);const w1=g.measureText(c).width;font(F.mono,big*.5,600);const sub=RSEA>0?T(`${s.flood} tiles flooded`,`${s.flood} بلاطات غمرها الماء`):T(`${s.lay}/${s.tot} stations`,`${s.lay}/${s.tot} محطات`);const w2=g.measureText(sub).width;
   const bw=Math.max(w1,w2)+big*1.6+big*.9,bh=big*2.1;g.save();g.globalAlpha=RFOC&&!foc?.55:1;rrect(p[0]-bw/2,p[1]-bh/2,bw,bh,bh/2);g.fillStyle="rgba(255,255,255,.95)";g.fill();g.strokeStyle=RCOL[c];g.lineWidth=foc?5:3;g.stroke();
   const cx=p[0]-bw/2+bh/2;g.fillStyle=RCOL[c];g.beginPath();g.arc(cx,p[1],bh*.32,0,7);g.fill();font(F.mono,big*.42,700);txt(String(s.lit),cx,p[1]+big*.15,"#fff","center");
   font(F.disp,big,700);txt(c,cx+bh*.45,p[1]+big*.1,"#1B2140");font(F.mono,big*.5,600);txt(sub,cx+bh*.45,p[1]+big*.68,"#5D6880");g.restore()}
+ if(RGOALSIGNS){const G=RGOALSIGNS;goalSign(GISL[0],1.2,GISL[1]-GRZ+.5,T("Founders' Island","جزيرة المؤسسين"),G.open?T("Bridge open: Grade 7 reached 50%","الجسر مفتوح: وصل الصف السابع إلى 50%"):T(`Bridge opens when Grade 7 reaches 50% · now ${Math.round(G.gp*100)}%`,`يُفتح الجسر عند 50% · الآن ${Math.round(G.gp*100)}%`),C.gold,G.open);
+  goalSign(19,.6,25.6,T("Marina","المرسى"),G.mar?T("Open: Grade 7 reached 100%","مفتوح: وصل الصف السابع إلى 100%"):T("Opens when Grade 7 reaches 100%","يُفتح عند وصول الصف السابع إلى 100%"),"#3C8DC4",G.mar);
+  goalSign(42.4,1.3,10.6,T("Desalination plant","محطة التحلية"),T("Water network: A5, due 17 Dec","شبكة المياه: المهمة 5، 17 ديسمبر"),C.pipe,true)}
  // legend
- font(F.mono,22,600);const lg="Every final station code lights a lamp on your class's road";const lw=g.measureText(lg).width+70;rrect(24,H-62,lw,40,20);g.fillStyle="rgba(21,23,27,.72)";g.fill();g.fillStyle="#FFD08A";g.beginPath();g.arc(48,H-42,8,0,7);g.fill();txt(lg,64,H-34,"#F2ECE0")}
+ font(F.mono,22,600);const lg=RSEA>0?T(`Rising sea test: the sea is ${RSEA} m higher. Lakes do not count.`,`اختبار ارتفاع البحر: البحر أعلى بـ ${RSEA} م. البحيرات لا تُحسب.`):T("Every final station code lights a lamp and builds your class landmark","كل رمز محطة نهائي يضيء مصباحًا ويبني برج صفّك");const lw=g.measureText(lg).width+70;rrect(24,H-62,lw,40,20);g.fillStyle="rgba(21,23,27,.72)";g.fill();g.fillStyle="#FFD08A";g.beginPath();g.arc(48,H-42,8,0,7);g.fill();txt(lg,64,H-34,"#F2ECE0")}
+function drawRegion(t){let SW=null;if(RTL){const k=clamp((t-RTL.t0)/RTL.dur);RTL.k=k;RTL.T=lerp(RTL.a,RTL.b,k);SW={};for(const c of RLIST){SW[c]=STATE.cities[c].districts;STATE.cities[c].districts=tlFilter(SW[c],RTL.T)}}
+ const t0=performance.now();try{drawRegion0(t)}finally{if(SW)for(const c in SW)STATE.cities[c].districts=SW[c]}
+ const dt=performance.now()-t0;if(!RLITE&&!RTL){RPERF.push(dt);if(RPERF.length>45){const av=RPERF.reduce((a,b)=>a+b,0)/RPERF.length;RPERF=[];let manual=null;try{manual=localStorage.getItem("c2040-lite")}catch(e){}if(av>60&&manual===null){RLITE=true;RLITEAUTO=true;renderRegion()}}}
+ if(RTL){const d=new Date(RTL.T);const ds=d.toLocaleDateString(LANG==="ar"?"ar-SA-u-ca-gregory-nu-latn":"en-GB",{weekday:"short",day:"numeric",month:"short"});font(F.disp,34,700);const w=Math.max(380,g.measureText(ds).width+80);
+  rrect(24,24,w,92,22);g.fillStyle="rgba(21,23,27,.82)";g.fill();txt(ds,24+w/2,68,"#F2ECE0","center");font(F.mono,15,600);txt(T("WATCH OUR REGION GROW","شاهد منطقتنا تنمو"),24+w/2,92,"#FFD08A","center");
+  rrect(44,102,w-40,6,3);g.fillStyle="rgba(255,255,255,.2)";g.fill();rrect(44,102,Math.max(6,(w-40)*RTL.k),6,3);g.fillStyle="#F6A623";g.fill();
+  if(RTL.k>=1){if(!RTL.end)RTL.end=t;if(t-RTL.end>3){RTL=null;renderRegion();renderHUD()}}}}
+
 function regionHUD(hud){let lay=0,tot=0,pop=0,n=0,N=0,lit=0;for(const c of RLIST){const s=classStats(c);lay+=s.lay;tot+=s.tot;pop+=s.pop;n+=s.n;N+=s.teams;lit+=s.lit}const pct=Math.round(lay/tot*100);
- hud.append(el("div",{class:"hrow"},el("span",{class:"mission"},el("b",{},"G7"),"CITY 2040 REGION"),el("div",{class:"prog"},el("small",{},`${pct}% of all stations done · ${lay}/${tot} final codes`),el("div",{class:"bar"},el("i",{style:`width:${pct}%`})))),
-  el("div",{class:"stats"},stat("flag","Districts",`${n}/${N}`),stat("people","Inhabitants",pop.toLocaleString()),stat("star","Lamps lit",`${lit}/${RLIST.length*RLAMPS}`),stat("tower","Cities",RLIST.length)))}
+ hud.append(el("div",{class:"hrow"},el("span",{class:"mission"},el("b",{},"G7"),T("CITY 2040 REGION","منطقة مدينة 2040")),el("div",{class:"prog"},el("small",{},T(`${pct}% of all stations done · ${lay}/${tot} final codes`,`أُنجز ${pct}% من المحطات · ${lay}/${tot} رمزًا نهائيًا`)),el("div",{class:"bar"},el("i",{style:`width:${pct}%`})))),
+  el("div",{class:"stats"},stat("flag",T("Districts","المناطق"),`${n}/${N}`),stat("people",T("Inhabitants","السكان"),pop.toLocaleString()),stat("star",T("Lamps lit","المصابيح المضاءة"),`${lit}/${RLIST.length*RLAMPS}`),stat("tower",T("Cities","المدن"),RLIST.length)))}
 function flyTo(c){RFOC=c;RTOUR=false;ZOOM=1;PANX=PANY=0;zoomUI();renderRegion();dirty=true}
 function renderRegion(){const p=$("#pane-region");if(!p)return;p.innerHTML="";
- const rows=RLIST.map(c=>[c,classStats(c)]).sort((a,b)=>b[1].pct-a[1].pct||b[1].pop-a[1].pop);const top=rows[0][1].lay>0?rows[0][0]:null;
- p.append(el("div",{class:"sec"},el("h2",{},"Grade 7 region"),el("p",{class:"lede"},"All six class cities, side by side, joined by one boulevard. Every final station code a class sends lights one more street lamp on its stretch of the road. Which class will light its road first?"),
-  el("div",{class:"ctl"},el("button",{class:"btn",onclick:()=>{RTOUR=!RTOUR;RTOURT=-99;RTI=-1;if(!RTOUR){RFOC=null}renderRegion()}},RTOUR?"Stop the tour":"Tour the cities"),
-   el("button",{class:"btn ghost",onclick:()=>{RNT=RNT>.3?0:.55;renderRegion()}},RNT>.3?"Daytime":"Night lights"),
-   RFOC?el("button",{class:"btn ghost",onclick:()=>flyTo(null)},"Whole region"):"")),
-  el("div",{class:"rgl"},...rows.map(([c,s],i)=>el("div",{class:"rgc"+(RFOC===c?" on":""),style:`--rc:${RCOL[c]}`},
-   el("div",{class:"rgh"},el("span",{class:"rgn"},c),el("div",{class:"rgt"},el("b",{},`${i+1}. ${c==="7H"?"7H":c} city`+(c===top?"  · brightest road":"")),el("small",{},`${s.n}/${s.teams} districts · ${s.lay}/${s.tot} stations · ${s.pop.toLocaleString()} inhabitants`))),
-   el("div",{class:"lamps","aria-label":`${s.lit} of ${RLAMPS} lamps lit`},...[...Array(RLAMPS)].map((_,k)=>el("i",{class:k<s.lit?"on":""}))),
-   el("div",{class:"ctl"},el("button",{class:"btn sm",onclick:()=>flyTo(c)},"Fly there"),el("button",{class:"btn sm ghost",onclick:()=>{setClass(c);setView("city")}},"Open the city"))))),
-  el("p",{class:"hint"},"Each class has 12 lamps. When every team in the class has sent all four final station codes, all 12 are lit. Tap a city on the map to fly to it."))}
+ const rows=RLIST.map(c=>[c,classStats(c)]).sort((a,b)=>b[1].pct-a[1].pct||b[1].pop-a[1].pop);const top=rows[0][1].lay>0?rows[0][0]:null;const G=gradeGoal();const gp=Math.round(G.pct*100);
+ const sea=el("input",{type:"range",min:"0",max:"10",step:"1",value:String(RSEA),"aria-label":T("Sea level","مستوى البحر")});const seaL=el("b",{},`+${RSEA} m`);sea.oninput=()=>{RSEA=+sea.value;seaL.textContent=`+${RSEA} m`;dirty=true};sea.onchange=()=>renderRegion();
+ p.append(el("div",{class:"sec"},el("h2",{},T("Grade 7 region","منطقة الصف السابع")),el("p",{class:"lede"},T("All six class cities on one island. Every final station code a class sends lights a street lamp on its road and builds its landmark tower on the shore. Which class will finish its landmark first?","مدن الصفوف الستة على جزيرة واحدة. كل رمز محطة نهائي يرسله الصف يضيء مصباحًا على طريقه ويبني برجه على الشاطئ. أي صف سيُكمل برجه أولًا؟")),
+  el("div",{class:"ctl"},el("button",{class:"btn",onclick:()=>{RTOUR=!RTOUR;RTOURT=-99;RTI=-1;if(!RTOUR){RFOC=null}renderRegion()}},RTOUR?T("Stop the tour","إيقاف الجولة"):T("Tour the cities","جولة في المدن")),
+   el("button",{class:"btn orange",onclick:()=>{if(RTL){RTL=null}else{const r=tlRange();if(!r)return;RTOUR=false;RFOC=null;RTL={t0:performance.now()/1000,dur:22,a:r[0],b:r[1]}}renderRegion()}},RTL?T("Stop the replay","إيقاف العرض"):T("Watch our region grow","شاهد منطقتنا تنمو")),
+   el("button",{class:"btn ghost",onclick:()=>{RNT=RNT>.3?0:.55;renderRegion()}},RNT>.3?T("Daytime","نهار"):T("Night lights","أضواء الليل")),
+   RFOC?el("button",{class:"btn ghost",onclick:()=>flyTo(null)},T("Whole region","المنطقة كاملة")):"")),
+  el("div",{class:"goal"},el("div",{class:"gh"},el("b",{},T("Grade 7 goal: build together","هدف الصف السابع: نبني معًا")),el("span",{},`${gp}%`)),
+   el("div",{class:"gbar"},el("i",{style:`width:${Math.min(100,gp)}%`}),el("em",{class:"m50"+(G.pct>=.5?" on":"")},"🌉"),el("em",{class:"m100"+(G.pct>=1?" on":"")},"⛵")),
+   el("small",{},T(`${G.lay} of ${G.tot} station codes across all classes. At 50% the bridge to Founders' Island opens; at 100% the marina opens. Every class helps, so help each other.`,`${G.lay} من ${G.tot} رمز محطة في جميع الصفوف. عند 50% يُفتح الجسر إلى جزيرة المؤسسين، وعند 100% يُفتح المرسى. كل صف يساهم، فساعدوا بعضكم.`))),
+  el("div",{class:"rgl"},...rows.map(([c,x],i)=>el("div",{class:"rgc"+(RFOC===c?" on":""),style:`--rc:${RCOL[c]}`},
+   el("div",{class:"rgh"},el("span",{class:"rgn"},c),el("div",{class:"rgt"},el("b",{},T(`${i+1}. ${c} city`,`${i+1}. مدينة ${c}`)+(c===top?T("  · brightest road","  · الطريق الأكثر إضاءة"):"")),el("small",{},T(`${x.n}/${x.teams} districts · ${x.lay}/${x.tot} stations · landmark ${Math.round(x.pct*100)}% built`,`${x.n}/${x.teams} مناطق · ${x.lay}/${x.tot} محطات · البرج مكتمل ${Math.round(x.pct*100)}%`)))),
+   el("div",{class:"lamps","aria-label":`${x.lit} / ${RLAMPS}`},...[...Array(RLAMPS)].map((_,k)=>el("i",{class:k<x.lit?"on":""}))),
+   el("div",{class:"ctl"},el("button",{class:"btn sm",onclick:()=>flyTo(c)},T("Fly there","اذهب إليها")),el("button",{class:"btn sm ghost",onclick:()=>{setClass(c);setView("city")}},T("Open the city","افتح المدينة")))))),
+  el("details",{class:"flood"},el("summary",{},el("b",{},T("Rising sea test (for Unit 8)","اختبار ارتفاع البحر (للوحدة 8)"))),
+   el("p",{class:"hint"},T("Raise the sea and see which tiles flood: every tile lower than the new sea level goes under water. Lakes do not count. The number on each city sign shows its flooded tiles.","ارفع مستوى البحر لترى البلاطات التي يغمرها الماء: كل بلاطة أدنى من المستوى الجديد تُغمر. البحيرات لا تُحسب. الرقم على لافتة كل مدينة يبيّن البلاطات المغمورة.")),
+   el("label",{class:"seal"},el("span",{},T("Sea level","مستوى البحر")),sea,seaL)),
+  el("div",{class:"ctl"},el("button",{class:"btn sm ghost",onclick:()=>{RLITE=!RLITE;RLITEAUTO=false;try{localStorage.setItem("c2040-lite",RLITE?"1":"0")}catch(e){}renderRegion()}},RLITE?T("Full detail","التفاصيل الكاملة"):T("Light mode (slow laptops)","الوضع الخفيف (للأجهزة البطيئة)")),
+   el("span",{class:"hint"},RLITEAUTO?T("Light mode was switched on because this device was drawing slowly.","فُعّل الوضع الخفيف تلقائيًا لأن الجهاز بطيء."):"")),
+  el("p",{class:"hint"},T("Each class has 12 lamps. When every team in the class has sent all four final station codes, all 12 are lit. Tap a city on the map to fly to it.","لكل صف 12 مصباحًا. عندما يرسل كل فريق في الصف رموز المحطات الأربع النهائية تُضاء كلها. اضغط على مدينة في الخريطة للانتقال إليها.")))}
 {let down=null;cv.addEventListener("pointerdown",e=>{down=[e.clientX,e.clientY]});
  cv.addEventListener("pointerup",e=>{if(view!=="region"||!down)return;if(Math.hypot(e.clientX-down[0],e.clientY-down[1])>6)return;const[x,y]=toCv(e.clientX,e.clientY);CAM=camFor();let best=null,bd=1e9;
   for(const c of RLIST){const[ox,oz]=ROFF[c];const q=P(ox+5,0,oz+3);const d=Math.hypot(q[0]-x,q[1]-y);if(d<bd){bd=d;best=c}}if(bd<Math.max(140,CAM.s*6))flyTo(RFOC===best?null:best)});
@@ -929,7 +1057,25 @@ function renderRegion(){const p=$("#pane-region");if(!p)return;p.innerHTML="";
 /* ---------- boot ---------- */
 root.append(el("div",{class:"tabs",role:"tablist"},el("button",{class:"tab","data-v":"city",onclick:()=>setView("city")},"Class city"),el("button",{class:"tab","data-v":"region",onclick:()=>setView("region")},"All cities"),el("button",{class:"tab","data-v":"mine",onclick:()=>setView("mine")},"My district"),el("button",{class:"tab","data-v":"teacher",hidden:"",id:"ttab",onclick:()=>setView("teacher")},"Teacher")),
  el("div",{class:"pane","data-v":"city",id:"pane-city"}),el("div",{class:"pane","data-v":"region",id:"pane-region"}),el("div",{class:"pane","data-v":"mine",id:"pane-mine"}),el("div",{class:"pane","data-v":"teacher",id:"pane-teacher"}));
-setView(D?"mine":"city");requestAnimationFrame(loop);
+
+const AR_EX={"Class city":"مدينة الصف","All cities":"كل المدن","My district":"منطقتي","Teacher":"المعلم","The class city":"مدينة الصف","Class":"الصف",
+ "Choose your class to see your city. Each Grade 7 class builds its own city.":"اختر الصف لترى مدينته. كل صف من الصف السابع يبني مدينته الخاصة.",
+ "Waiting for its code":"بانتظار الرمز","Pause turning":"إيقاف الدوران","Turn the city":"تدوير المدينة","Tap a team to see its choices and talk about them.":"اضغط على فريق لترى اختياراته وتناقشها.",
+ "Districts":"المناطق","Inhabitants":"السكان","Tallest":"الأعلى","Final codes":"الرموز النهائية","CLASS CITY":"مدينة الصف",
+ "No districts saved yet. Each team builds its district in “My district”, then sends its code to the teacher.":"لم تُحفظ أي منطقة بعد. يبني كل فريق منطقته في «منطقتي» ثم يرسل الرمز إلى المعلم.",
+ "Their choices, from the numbers they sent":"اختياراتهم، من الأرقام التي أرسلوها","Close":"إغلاق","Compare the districts":"قارن بين المناطق",
+ "Drag to turn · scroll or double-click to zoom · Shift + drag to move":"اسحب للتدوير · مرّر أو انقر مرتين للتكبير · Shift + سحب للتحريك","Drag to turn · pinch to zoom and move":"اسحب للتدوير · اقرص للتكبير والتحريك",
+ "Grade 7 Mathematics · City Hall":"رياضيات الصف السابع · دار البلدية","Mission 01 · Founding Sprint":"المهمة 01 · مرحلة التأسيس"};
+const AR_RX=[[/^The (7[A-H]) city$/,"مدينة $1"],[/^(\d+) of (\d+) teams have built their district\. Drag the city to turn it\.$/,"بنى $1 من $2 فرق مناطقها. اسحب المدينة لتدويرها."],
+ [/^Team (\d) · (.+)$/,"الفريق $1 · $2"],[/^(7[A-H]) CITY$/,"مدينة $1"],[/^(\d+)% of the city approved · (\d+)\/(\d+) final districts$/,"اعتُمد $1% من المدينة · $2/$3 مناطق نهائية"],
+ [/^Last saved by the teacher: (.+)$/,"آخر حفظ من المعلم: $1"],[/^(.+) · Team (\d)$/,"$1 · الفريق $2"]];
+function trWalk(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode())){const v=n.nodeValue,t=v.trim();if(!t)continue;let r=AR_EX[t];if(!r)for(const[rx,to]of AR_RX)if(rx.test(t)){r=t.replace(rx,to);break}if(r&&r!==t){if(n.__en==null)n.__en=v;n.nodeValue=v.replace(t,r)}}}
+function trRoots(){return[$(".tabs"),$("#hud"),$("#pane-city"),$("#pane-region"),$(".top"),document.querySelector(".cap")].filter(Boolean)}
+function applyLang(){const ar=LANG==="ar";trRoots().forEach(r=>{if(r.id==="pane-city"||r.id==="pane-region"||r.id==="hud"||r.classList.contains("tabs"))r.dir=ar?"rtl":"";if(ar)trWalk(r);else{const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))if(n.__en!=null){n.nodeValue=n.__en;n.__en=null}}});
+ const b=$("#langb");if(b)b.textContent=ar?"English":"عربي";document.documentElement.lang=ar?"ar":"en"}
+{let pend=false;new MutationObserver(()=>{if(LANG!=="ar"||pend)return;pend=true;requestAnimationFrame(()=>{pend=false;trRoots().forEach(trWalk)})}).observe(document.body,{childList:true,subtree:true,characterData:true})}
+{const top=$(".top");if(top){const b=el("button",{id:"langb",class:"btn ghost sm",type:"button",onclick:()=>{LANG=LANG==="ar"?"en":"ar";try{localStorage.setItem("c2040-lang",LANG)}catch(e){}setView(view);applyLang();dirty=true}},"عربي");top.append(b)}}
+setView(D?"mine":"city");applyLang();requestAnimationFrame(loop);
 window.__c2040={checks,calc,enc,dec,blank,setClass,STATE,renderTeacher:()=>{$("#ttab").hidden=false;setView("teacher")}};
 if(/teacher/i.test(location.hash+location.search))$("#ttab").hidden=false;
 })();
